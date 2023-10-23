@@ -1,8 +1,6 @@
 package tasks;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Stack;
+import java.util.*;
 
 public class FlattenArray {
 
@@ -11,9 +9,9 @@ public class FlattenArray {
                 1,
                 2,
                 new Object[]{ 3, 4,
-                        new Object[]{ 5, 6 }
+                        new Object[]{ 5, 6 }, 7
                 },
-                7
+                8
         };
 
         List flatten = flatten(testArr);
@@ -21,29 +19,24 @@ public class FlattenArray {
     }
 
     static List flatten(Object[] arr) {
-        var result = new ArrayList<>();
+        var result = new LinkedList();
 
-        var stack = new Stack<Object[]>();
+        var stack = new Stack();
+        stack.push(arr);
 
-        var temp = arr;
+        while (!stack.isEmpty()) {
+            var next = stack.pop();
 
-        while (temp != null) {
-            for (int i = 0; i < temp.length; i++) {
-                if (temp[i] instanceof Object[] asArr) {
-                    stack.push(asArr);
-                } else {
-                    result.add(temp[i]);
+            if (next instanceof Object[] asArr) {
+                for (int i = 0; i < asArr.length; i++) {
+                    stack.push(asArr[i]);
                 }
+            } else {
+                result.addFirst(next);
             }
 
-            if (!stack.isEmpty()) {
-                temp = stack.pop();
-            } else {
-                temp = null;
-            }
         }
 
         return result;
     }
-
 }
