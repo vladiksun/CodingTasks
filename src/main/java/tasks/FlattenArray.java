@@ -28,11 +28,11 @@ public class FlattenArray {
         var temp = arr;
 
         while (temp != null) {
-            for (Object o : temp) {
-                if (o instanceof Object[] asArr) {
+            for (int i = 0; i < temp.length; i++) {
+                if (temp[i] instanceof Object[] asArr) {
                     stack.push(asArr);
                 } else {
-                    result.add(o);
+                    result.add(temp[i]);
                 }
             }
 
